@@ -1,17 +1,27 @@
 import os
 
-def print_fils_py(path):
-  result =[]
+def End_count(path):
+  result = {}
 
   for item in os.listdir(path):
     full_path = os.path.join(path, item)
 
     if os.path.isfile(full_path):
-      if full_path.endswith(".py"):
-        result.append(full_path)
+      if "." in item:
+       ext = item.split(".")[-1]
+       if ext in result:
+        result[ext] +=1
+       else:
+        result[ext] = 1
     else:
-      result.extend(print_fils_py(full_path))  
-  return result
-files = print_fils_py(r"C:\Users\User\Desktop\Working_with_files")
+     sub_res = End_count(full_path)
+    
+     for key in sub_res:
+       if key in result:
+        result[key] += sub_res[key]
+       else:
+         result[key] = sub_res[key]
+  return result    
+files =End_count(r"C:\Users\User\Desktop\Working_with_files")
 print(files)
  
